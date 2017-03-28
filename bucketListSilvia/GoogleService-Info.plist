@@ -37,3 +37,4 @@
         <key>DATABASE_URL</key>
         <string>https://bucketlistapp-60977.firebaseio.com</string>
     </dict>
+</plist>
