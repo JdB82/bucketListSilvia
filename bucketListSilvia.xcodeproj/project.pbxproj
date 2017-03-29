@@ -20,7 +20,8 @@
 		609C4A201E50E26700E0C044 /* bucketListSilviaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609C4A1F1E50E26700E0C044 /* bucketListSilviaTests.swift */; };
 		609C4A2B1E50E26700E0C044 /* bucketListSilviaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609C4A2A1E50E26700E0C044 /* bucketListSilviaUITests.swift */; };
 		609C4A391E50E2B800E0C044 /* TableViewControllerBucketList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609C4A381E50E2B800E0C044 /* TableViewControllerBucketList.swift */; };
-		BECB0F8F1E8BD2DC0098F5D3 /* GoogleService-Info (1).plist in Resources */ = {isa = PBXBuildFile; fileRef = BECB0F8E1E8BD2DC0098F5D3 /* GoogleService-Info (1).plist */; };
+		BECB0F911E8BD4010098F5D3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BECB0F901E8BD4010098F5D3 /* GoogleService-Info.plist */; };
+		BECB0F941E8BD83E0098F5D3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECB0F931E8BD83E0098F5D3 /* Constants.swift */; };
 		EAA49DE0648BCE12071373FF /* Pods_bucketListSilvia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D023DDE9AB7932F0C140F538 /* Pods_bucketListSilvia.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,7 +65,9 @@
 		609C4A381E50E2B800E0C044 /* TableViewControllerBucketList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewControllerBucketList.swift; path = ../TableViewControllerBucketList.swift; sourceTree = "<group>"; };
 		6451CB0A70691A6C50A3EC68 /* Pods-bucketListSilviaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bucketListSilviaUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-bucketListSilviaUITests/Pods-bucketListSilviaUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B7D36EBE095C5CC7417A95FB /* Pods-bucketListSilvia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bucketListSilvia.release.xcconfig"; path = "Pods/Target Support Files/Pods-bucketListSilvia/Pods-bucketListSilvia.release.xcconfig"; sourceTree = "<group>"; };
-		BECB0F8E1E8BD2DC0098F5D3 /* GoogleService-Info (1).plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info (1).plist"; sourceTree = "<group>"; };
+		BECB0F901E8BD4010098F5D3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BECB0F921E8BD6770098F5D3 /* bucketListSilvia.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = bucketListSilvia.entitlements; sourceTree = "<group>"; };
+		BECB0F931E8BD83E0098F5D3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C49E3A56A1C1972CCECD7995 /* Pods_bucketListSilviaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bucketListSilviaUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D023DDE9AB7932F0C140F538 /* Pods_bucketListSilvia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bucketListSilvia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEC360F7154A39D51C2B9671 /* Pods-bucketListSilviaUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bucketListSilviaUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-bucketListSilviaUITests/Pods-bucketListSilviaUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -133,7 +136,8 @@
 		609C4A091E50E26700E0C044 /* bucketListSilvia */ = {
 			isa = PBXGroup;
 			children = (
-				BECB0F8E1E8BD2DC0098F5D3 /* GoogleService-Info (1).plist */,
+				BECB0F921E8BD6770098F5D3 /* bucketListSilvia.entitlements */,
+				BECB0F901E8BD4010098F5D3 /* GoogleService-Info.plist */,
 				609C4A0A1E50E26700E0C044 /* AppDelegate.swift */,
 				609C4A381E50E2B800E0C044 /* TableViewControllerBucketList.swift */,
 				609C4A131E50E26700E0C044 /* LaunchScreen.storyboard */,
@@ -143,6 +147,7 @@
 				609C4A161E50E26700E0C044 /* Info.plist */,
 				609C4A111E50E26700E0C044 /* Assets.xcassets */,
 				60136F6D1E66D8F400376EE6 /* DataLayer */,
+				BECB0F931E8BD83E0098F5D3 /* Constants.swift */,
 			);
 			path = bucketListSilvia;
 			sourceTree = "<group>";
@@ -267,6 +272,11 @@
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = CWK29L7ZPT;
 						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					609C4A1A1E50E26700E0C044 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -308,8 +318,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				609C4A151E50E26700E0C044 /* LaunchScreen.storyboard in Resources */,
-				BECB0F8F1E8BD2DC0098F5D3 /* GoogleService-Info (1).plist in Resources */,
 				6013C4221E630A7C000A50C7 /* bucketListTableViewCell.xib in Resources */,
+				BECB0F911E8BD4010098F5D3 /* GoogleService-Info.plist in Resources */,
 				609C4A121E50E26700E0C044 /* Assets.xcassets in Resources */,
 				609C4A101E50E26700E0C044 /* Main.storyboard in Resources */,
 			);
@@ -479,6 +489,7 @@
 				60136F711E66DA8200376EE6 /* DataProvider.swift in Sources */,
 				609C4A391E50E2B800E0C044 /* TableViewControllerBucketList.swift in Sources */,
 				60136F6F1E66D91600376EE6 /* BucketWishes.swift in Sources */,
+				BECB0F941E8BD83E0098F5D3 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -573,7 +584,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -617,7 +628,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -631,6 +642,7 @@
 			baseConfigurationReference = 30160339EECB0BD194BB4EE7 /* Pods-bucketListSilvia.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = bucketListSilvia/bucketListSilvia.entitlements;
 				DEVELOPMENT_TEAM = CWK29L7ZPT;
 				INFOPLIST_FILE = bucketListSilvia/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -647,6 +659,7 @@
 			baseConfigurationReference = B7D36EBE095C5CC7417A95FB /* Pods-bucketListSilvia.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = bucketListSilvia/bucketListSilvia.entitlements;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = bucketListSilvia/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

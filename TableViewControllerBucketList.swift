@@ -8,8 +8,11 @@
 
 import UIKit
 import FirebaseDatabase
+import Foundation
+import Firebase
+import UserNotifications
 
-class TableViewControllerBucketList: UITableViewController {
+class TableViewControllerBucketList: UITableViewController{
     
     var bucketArray: [BucketWishes] = []
     var ref: FIRDatabaseReference!
@@ -21,7 +24,7 @@ class TableViewControllerBucketList: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(TableViewControllerBucketList.receiveMessage), name: NSNotification.Name(rawValue: "message"), object: nil)
         let nib = UINib(nibName: "bucketListTableViewCell", bundle: nil)
         self.tableView.register(nib, forCellReuseIdentifier: "bucketListTableViewCell")
         
@@ -61,6 +64,12 @@ class TableViewControllerBucketList: UITableViewController {
     }
 
     
+    func receiveMessage(notification: NSNotification) {
+        var message: Dictionary<String,String> = notification.userInfo as! Dictionary<String,String>
+        let alert = UIAlertController(title: "Bucket List", message: message["message"], preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
     func notifyObservers(notification: NSNotification) {
         var bucketlistDictionary: Dictionary<String,[BucketWishes]> = notification.userInfo as! Dictionary<String,[BucketWishes]>
         bucketArray = bucketlistDictionary["BucketWishes"]!

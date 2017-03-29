@@ -8,38 +8,84 @@
 
 import UIKit
 import Firebase
-import FirebaseMessaging
+import UserNotifications
+
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, FIRMessagingDelegate, UNUserNotificationCenterDelegate  {
 
     var window: UIWindow?
 
-
+    func applicationReceivedRemoteMessage(_ remoteMessage: FIRMessagingRemoteMessage) {
+        print(remoteMessage)
+    }
+    
+    func tokenRefreshNotification(_ notification: Notification) {
+        if let refreshedToken = FIRInstanceID.instanceID().token() {
+            print("InstanceID token: \(refreshedToken)")
+        }
+        
+        // Connect to FCM since connection may have failed when attempted before having a token.
+        connectToFcm()
+    }
+    
+    func connectToFcm() {
+        // Won't connect since there is no token
+        guard FIRInstanceID.instanceID().token() != nil else {
+            return
+        }
+        
+        // Disconnect previous FCM connection if it exists.
+        FIRMessaging.messaging().disconnect()
+        
+        FIRMessaging.messaging().connect { (error) in
+            if error != nil {
+                print("Unable to connect with FCM. \(error)")
+            } else {
+                print("Connected to FCM.")
+            }
+        }
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
+        if let token = FIRInstanceID.instanceID().token() {
+            print(token)
+        }
         FIRApp.configure()
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.firInstanceIDTokenRefresh, object: nil, queue: nil) { (noti) in
+            print(noti)
+
+        }
         
-        if #available(iOS 10.0, *) {
+
+        if #available(iOS 10, *) {
             // For iOS 10 display notification (sent via APNS)
             UNUserNotificationCenter.current().delegate = self
             
-            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-            UNUserNotificationCenter.current().requestAuthorization(
-                options: authOptions,
-                completionHandler: {_, _ in })
-            
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
+                guard error == nil else {
+                    //Display Error.. Handle Error.. etc..
+                    return
+                }
+                if granted {
+                    //Register for RemoteNotifications. Your Remote Notifications can display alerts now :)
+                    application.registerForRemoteNotifications()
+                }
+                else {
+                    //Handle user denying permissions..
+                }
+            }
+            //Register for remote notifications.. If permission above is NOT granted, all notifications are delivered silently to AppDelegate.
+            application.registerForRemoteNotifications()
             // For iOS 10 data message (sent via FCM)
             FIRMessaging.messaging().remoteMessageDelegate = self
-            
-        } else {
-            let settings: UIUserNotificationSettings =
-                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-            application.registerUserNotificationSettings(settings)
         }
-        
-        application.registerForRemoteNotifications()
-        
+        else {
+            let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+            application.registerForRemoteNotifications()
+        }
+
         // Override point for customization after application launch.
         return true
     }
@@ -52,6 +98,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        FIRMessaging.messaging().disconnect()
+
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -64,6 +112,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+        // If you are receiving a notification message while your app is in the background,
+        // this callback will not be fired till the user taps on the notification launching the application.
+        // TODO: Handle data of notification
+        
+        
+        // Print message ID.
+//        if let messageID = userInfo[gcmMessageIDKey] {
+//            print("Message ID: \(messageID)")
+//        }
+        
+        // Print full message.
+        print(userInfo)
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        // If you are receiving a notification message while your app is in the background,
+        // this callback will not be fired till the user taps on the notification launching the application.
+        // TODO: Handle data of notification
+
+        // Print message ID.
+        if let aps = userInfo["aps"] as? NSDictionary, let message = aps["alert"] as? String {
+            print("Message ID: \(message)")
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "message"), object: nil, userInfo: ["message":message])
+        }
+        
+        // Print full message.
+        print(userInfo)
+        
+        completionHandler(UIBackgroundFetchResult.newData)
     }
 
 
