@@ -7,7 +7,7 @@ target 'bucketListSilvia' do
 
 pod 'Firebase/Core'
 pod 'Firebase/Database'
-
+pod 'Firebase/Messaging'
   # Pods for bucketListSilvia
 
   target 'bucketListSilviaTests' do
